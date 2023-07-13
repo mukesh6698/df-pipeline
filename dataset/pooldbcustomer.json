@@ -1,0 +1,34 @@
+{
+	"name": "pooldbcustomer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapsepooldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "customerid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customername",
+				"type": "varchar"
+			},
+			{
+				"name": "registered",
+				"type": "bit"
+			},
+			{
+				"name": "courses",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "customer"
+		}
+	}
+}
