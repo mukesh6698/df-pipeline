@@ -13,6 +13,234 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/flatten_column_array')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Json1customer",
+								"type": "DatasetReference"
+							},
+							"name": "customerarraystream"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pooldbsutomerarray",
+								"type": "DatasetReference"
+							},
+							"name": "customerarray"
+						}
+					],
+					"transformations": [
+						{
+							"name": "customeerarrayfatten"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          customerid as integer,",
+						"          customername as string,",
+						"          registered as boolean,",
+						"          courses as string[],",
+						"          details as (mobile as string, city as string)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'arrayOfDocuments') ~> customerarraystream",
+						"customerarraystream foldDown(unroll(courses, courses),",
+						"     mapColumn(",
+						"          courses,",
+						"          customerid,",
+						"          customername,",
+						"          registered,",
+						"          mobile = details.mobile,",
+						"          city = details.city",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> customeerarrayfatten",
+						"customeerarrayfatten sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          customerid as integer,",
+						"          customername as string,",
+						"          registered as boolean,",
+						"          courses as string,",
+						"          mobile as string,",
+						"          city as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     staged: true,",
+						"     allowCopyCommand: true,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          customerid,",
+						"          customername,",
+						"          registered,",
+						"          courses,",
+						"          mobile,",
+						"          city",
+						"     )) ~> customerarray"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/parquet_pooldb_derived')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquetfile",
+								"type": "DatasetReference"
+							},
+							"name": "parquetfile"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "parquetpoolbd",
+								"type": "DatasetReference"
+							},
+							"name": "parquetpooldb"
+						}
+					],
+					"transformations": [
+						{
+							"name": "split1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as string,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> parquetfile",
+						"parquetfile split(Resourcegroup=='app-grp',",
+						"     disjoint: false) ~> split1@(onlyappgrp, others)",
+						"split1@onlyappgrp sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as string,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     staged: true,",
+						"     allowCopyCommand: true,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> parquetpooldb"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/01-self-hosted-runtime')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "appvm",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Binarydata",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-07-11T04:02:46Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/02-binary-to-pooldb')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -163,7 +391,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/flatten_column_array')]"
+			]
 		}
 	]
 }
