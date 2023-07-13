@@ -1,0 +1,43 @@
+{
+	"name": "pooldbsutomerarray",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapsepooldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "customerid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customername",
+				"type": "varchar"
+			},
+			{
+				"name": "registered",
+				"type": "bit"
+			},
+			{
+				"name": "courses",
+				"type": "varchar"
+			},
+			{
+				"name": "mobile",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "customer_Array"
+		}
+	}
+}
