@@ -1,0 +1,18 @@
+{
+	"name": "Binarydata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "storage6698",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "binary"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

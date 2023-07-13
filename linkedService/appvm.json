@@ -1,0 +1,17 @@
+{
+	"name": "appvm",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "D:\\nginx-1.25.1\\logs",
+			"userId": "appvm",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjYTg2OWYxMC02YjY4LTRhOWMtYjdjMi1mZDA1MWYyMzU4ZjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "appvmRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
