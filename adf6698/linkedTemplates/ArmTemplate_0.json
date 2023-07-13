@@ -54,16 +54,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/appvmRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/synapsepooldb')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -75,6 +65,60 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/appvmRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapsepooldb",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "IP",
+						"type": "varchar"
+					},
+					{
+						"name": "Timeline",
+						"type": "varchar"
+					},
+					{
+						"name": "Request",
+						"type": "varchar"
+					},
+					{
+						"name": "Status",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Bytes",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "details"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/synapsepooldb')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Binarydata')]",
@@ -133,30 +177,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/storage6698')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/appvm')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('appvm_properties_typeProperties_host')]",
-					"userId": "[parameters('appvm_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('appvm_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "appvmRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/appvmRuntime')]"
 			]
 		},
 		{
@@ -223,45 +243,27 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/appvm')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "synapsepooldb",
-					"type": "LinkedServiceReference"
-				},
 				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "IP",
-						"type": "varchar"
-					},
-					{
-						"name": "Timeline",
-						"type": "varchar"
-					},
-					{
-						"name": "Request",
-						"type": "varchar"
-					},
-					{
-						"name": "Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Bytes",
-						"type": "varchar"
-					}
-				],
+				"type": "FileServer",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "details"
+					"host": "[parameters('appvm_properties_typeProperties_host')]",
+					"userId": "[parameters('appvm_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('appvm_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "appvmRuntime",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/synapsepooldb')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/appvmRuntime')]"
 			]
 		},
 		{
@@ -351,8 +353,8 @@
 						"          IP as string,",
 						"          Timeline as string,",
 						"          Request as string,",
-						"          Status as string,",
-						"          Bytes as string",
+						"          Status as integer,",
+						"          Bytes as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
