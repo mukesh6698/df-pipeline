@@ -409,8 +409,7 @@
 					},
 					{
 						"name": "mobile",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					},
 					{
 						"name": "city",
@@ -708,7 +707,7 @@
 						"          customername as string,",
 						"          registered as boolean,",
 						"          courses as string,",
-						"          mobile as integer,",
+						"          mobile as string,",
 						"          city as string",
 						"     ),",
 						"     deletable:false,",
