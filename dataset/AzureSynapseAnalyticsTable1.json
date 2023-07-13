@@ -22,11 +22,13 @@
 			},
 			{
 				"name": "Status",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "Bytes",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
