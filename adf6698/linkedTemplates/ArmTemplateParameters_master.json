@@ -8,6 +8,9 @@
 		"appvm_password": {
 			"value": ""
 		},
+		"pool_db_customer_connectionString": {
+			"value": ""
+		},
 		"storage6698_accountKey": {
 			"value": ""
 		},

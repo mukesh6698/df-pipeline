@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf6698"
 		},
+		"pool_db_customer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'pool_db_customer'"
+		},
 		"storage6698_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage6698'"
@@ -15,21 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'synapsepooldb'"
 		},
-		"appvm_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'appvm'"
-		},
 		"storage6698_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage6698.dfs.core.windows.net/"
-		},
-		"appvm_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "D:\\nginx-1.25.1\\logs"
-		},
-		"appvm_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "appvm"
 		}
 	},
 	"variables": {
@@ -66,6 +58,19 @@
 					"cancelAfter": {}
 				},
 				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pool_db_customer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('pool_db_customer_connectionString')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -923,7 +928,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "synapsepooldb",
+					"referenceName": "pool_db_customer",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -948,31 +953,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/synapsepooldb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/appvm')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('appvm_properties_typeProperties_host')]",
-					"userId": "[parameters('appvm_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('appvm_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "appvmRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/appvmRuntime')]"
+				"[concat(variables('factoryId'), '/linkedServices/pool_db_customer')]"
 			]
 		}
 	]
