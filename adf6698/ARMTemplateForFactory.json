@@ -434,11 +434,7 @@
 											"writeBehavior": "Insert",
 											"sqlWriterUseTableLock": false
 										},
-										"enableStaging": false,
-										"translator": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+										"enableStaging": false
 									},
 									"inputs": [
 										{
