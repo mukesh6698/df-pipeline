@@ -2,7 +2,7 @@
 	"name": "synapsedb_customerdetails",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "synapsepooldb",
+			"referenceName": "pool_db_customer",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
