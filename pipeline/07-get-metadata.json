@@ -92,7 +92,10 @@
 							"inputs": [
 								{
 									"referenceName": "customercsvadls",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": "Customer1.csv"
+									}
 								}
 							],
 							"outputs": [
