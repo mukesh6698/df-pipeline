@@ -115,7 +115,8 @@
 				"schema": [
 					{
 						"name": "CustomerID",
-						"type": "varchar"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "CompanyName",
