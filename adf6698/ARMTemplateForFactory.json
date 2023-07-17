@@ -452,7 +452,9 @@
 										{
 											"referenceName": "customercsvadls",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"filename": "Customer1.csv"
+											}
 										}
 									],
 									"outputs": [
@@ -1787,7 +1789,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "pool_db_customer",
+					"referenceName": "synapsepooldb",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -1812,7 +1814,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/pool_db_customer')]"
+				"[concat(variables('factoryId'), '/linkedServices/synapsepooldb')]"
 			]
 		},
 		{
