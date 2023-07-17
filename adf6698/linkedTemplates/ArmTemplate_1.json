@@ -254,7 +254,10 @@
 											"referenceName": "customercsvadls",
 											"type": "DatasetReference",
 											"parameters": {
-												"filename": "Customer1.csv"
+												"filename": {
+													"value": "@item().name",
+													"type": "Expression"
+												}
 											}
 										}
 									],

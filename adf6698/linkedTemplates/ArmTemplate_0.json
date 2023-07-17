@@ -759,8 +759,7 @@
 				},
 				"parameters": {
 					"filename": {
-						"type": "string",
-						"defaultValue": "Customer1.csv"
+						"type": "string"
 					}
 				},
 				"annotations": [],
