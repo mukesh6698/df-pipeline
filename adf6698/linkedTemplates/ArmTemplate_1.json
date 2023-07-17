@@ -656,7 +656,9 @@
 							{
 								"referenceName": "customercsvadls",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filename": "Customer1.csv"
+								}
 							}
 						],
 						"outputs": [
