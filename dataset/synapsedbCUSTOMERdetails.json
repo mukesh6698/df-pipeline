@@ -1,0 +1,29 @@
+{
+	"name": "synapsedbCUSTOMERdetails",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapsepooldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "varchar"
+			},
+			{
+				"name": "CompanyName",
+				"type": "varchar"
+			},
+			{
+				"name": "SalesPerson",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "customerdetails"
+		}
+	}
+}
