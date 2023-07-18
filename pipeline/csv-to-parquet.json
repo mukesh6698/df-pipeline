@@ -51,7 +51,7 @@
 						"referenceName": "customercsvadls",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "customer1.csv"
+							"filename": "Customer1.csv"
 						}
 					}
 				],
