@@ -34,6 +34,10 @@
 		"storage6698_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage6698.dfs.core.windows.net/"
+		},
+		"bricksworkspace_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0724-182919-yf2rc4w9"
 		}
 	},
 	"variables": {
@@ -2392,6 +2396,59 @@
 				"[concat(variables('factoryId'), '/datasets/Parquetfile')]",
 				"[concat(variables('factoryId'), '/datasets/parquetpoolbd')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Databricks_notebook')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "RunBook",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/lokesh1999n@outlook.com/ADF_Book"
+						},
+						"linkedServiceName": {
+							"referenceName": "bricksworkspace",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/bricksworkspace')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/bricksworkspace')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-4973101208793290.10.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/2f1a1a40-876a-498e-bb53-213f31b76f9e/resourceGroups/azresourcegrp/providers/Microsoft.Databricks/workspaces/bricksworkspace",
+					"existingClusterId": "[parameters('bricksworkspace_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

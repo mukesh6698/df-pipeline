@@ -22,6 +22,10 @@
 		"storage6698_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage6698.dfs.core.windows.net/"
+		},
+		"bricksworkspace_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0724-182919-yf2rc4w9"
 		}
 	},
 	"variables": {
@@ -111,6 +115,22 @@
 			"properties": {
 				"type": "SelfHosted",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/bricksworkspace')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-4973101208793290.10.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/2f1a1a40-876a-498e-bb53-213f31b76f9e/resourceGroups/azresourcegrp/providers/Microsoft.Databricks/workspaces/bricksworkspace",
+					"existingClusterId": "[parameters('bricksworkspace_properties_typeProperties_existingClusterId')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -865,72 +885,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/storage6698')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/parquetpoolbd')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "synapsepooldb",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "Correlationid",
-						"type": "varchar"
-					},
-					{
-						"name": "Operationname",
-						"type": "varchar"
-					},
-					{
-						"name": "Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Eventcategory",
-						"type": "varchar"
-					},
-					{
-						"name": "Level",
-						"type": "varchar"
-					},
-					{
-						"name": "Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Subscription",
-						"type": "varchar"
-					},
-					{
-						"name": "Eventinitiatedby",
-						"type": "varchar"
-					},
-					{
-						"name": "Resourcetype",
-						"type": "varchar"
-					},
-					{
-						"name": "Resourcegroup",
-						"type": "varchar"
-					},
-					{
-						"name": "Resource",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "parquetTable"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/synapsepooldb')]"
 			]
 		}
 	]

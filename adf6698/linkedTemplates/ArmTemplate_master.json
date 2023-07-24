@@ -35,6 +35,10 @@
 			"type": "string",
 			"defaultValue": "https://storage6698.dfs.core.windows.net/"
 		},
+		"bricksworkspace_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0724-182919-yf2rc4w9"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -73,6 +77,9 @@
 					},
 					"storage6698_properties_typeProperties_url": {
 						"value": "[parameters('storage6698_properties_typeProperties_url')]"
+					},
+					"bricksworkspace_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('bricksworkspace_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},
@@ -105,6 +112,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'adf6698_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf6698_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf6698_ArmTemplate_1')]"
 			]
 		}
 	]
