@@ -27,12 +27,12 @@
 						}
 					},
 					"sink": {
-						"type": "JsonSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -40,56 +40,138 @@
 						"type": "TabularTranslator",
 						"mappings": [
 							{
+								"source": {
+									"name": "Correlation id",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['Customers'][0]['customerid']"
+									"name": "Correlationid",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Operation name",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['Customers'][0]['customername']"
+									"name": "Operationname",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['Customers'][0]['registered']"
+									"name": "Status",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Event category",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['Customers'][0]['courses'][0]"
+									"name": "Eventcategory",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Level",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['customerid']"
+									"name": "Level",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Time",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['customername']"
+									"name": "Time",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Subscription",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['registered']"
+									"name": "Subscription",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Event initiated by",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['courses'][0]"
+									"name": "Eventinitiatedby",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Resource type",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['details']['mobile']"
+									"name": "Resource type",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
+								"source": {
+									"name": "Resource group",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"path": "$['details']['city']"
+									"name": "Resourcegroup",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Resource",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Resource",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							}
-						]
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
 				"inputs": [
@@ -100,7 +182,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Json_ManagedIdentity",
+						"referenceName": "Parquetoncsv",
 						"type": "DatasetReference"
 					}
 				]

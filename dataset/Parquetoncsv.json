@@ -1,0 +1,19 @@
+{
+	"name": "Parquetoncsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "managedidentity_ADLS6698",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "csv"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
