@@ -31,13 +31,17 @@
 			"type": "string",
 			"defaultValue": "appvm"
 		},
+		"bricksworkspace_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0724-182919-yf2rc4w9"
+		},
 		"storage6698_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storage6698.dfs.core.windows.net/"
 		},
-		"bricksworkspace_properties_typeProperties_existingClusterId": {
+		"managedidentity_ADLS6698_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "0724-182919-yf2rc4w9"
+			"defaultValue": "https://storage6698.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -75,11 +79,14 @@
 					"synapsepooldb_connectionString": {
 						"value": "[parameters('synapsepooldb_connectionString')]"
 					},
+					"bricksworkspace_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('bricksworkspace_properties_typeProperties_existingClusterId')]"
+					},
 					"storage6698_properties_typeProperties_url": {
 						"value": "[parameters('storage6698_properties_typeProperties_url')]"
 					},
-					"bricksworkspace_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('bricksworkspace_properties_typeProperties_existingClusterId')]"
+					"managedidentity_ADLS6698_properties_typeProperties_url": {
+						"value": "[parameters('managedidentity_ADLS6698_properties_typeProperties_url')]"
 					}
 				}
 			},

@@ -23,11 +23,14 @@
 		"appvm_properties_typeProperties_userId": {
 			"value": "appvm"
 		},
+		"bricksworkspace_properties_typeProperties_existingClusterId": {
+			"value": "0724-182919-yf2rc4w9"
+		},
 		"storage6698_properties_typeProperties_url": {
 			"value": "https://storage6698.dfs.core.windows.net/"
 		},
-		"bricksworkspace_properties_typeProperties_existingClusterId": {
-			"value": "0724-182919-yf2rc4w9"
+		"managedidentity_ADLS6698_properties_typeProperties_url": {
+			"value": "https://storage6698.dfs.core.windows.net/"
 		}
 	}
 }
