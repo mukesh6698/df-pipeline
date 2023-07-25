@@ -1,0 +1,10 @@
+{
+	"name": "managedidentity_ADLS6698",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://storage6698.dfs.core.windows.net/"
+		}
+	}
+}
